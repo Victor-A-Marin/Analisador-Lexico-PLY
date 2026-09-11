@@ -1,0 +1,125 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> lista_declaracoes
+Rule 2     lista_declaracoes -> lista_declaracoes declaracao
+Rule 3     lista_declaracoes -> declaracao
+Rule 4     declaracao -> TIPO lista_ids PV
+Rule 5     lista_ids -> ID
+Rule 6     lista_ids -> lista_ids VIRG ID
+
+Terminals, with rules where they appear
+
+ID                   : 5 6
+PV                   : 4
+TIPO                 : 4
+VIRG                 : 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+declaracao           : 2 3
+lista_declaracoes    : 1 2
+lista_ids            : 4 6
+programa             : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . lista_declaracoes
+    (2) lista_declaracoes -> . lista_declaracoes declaracao
+    (3) lista_declaracoes -> . declaracao
+    (4) declaracao -> . TIPO lista_ids PV
+
+    TIPO            shift and go to state 4
+
+    programa                       shift and go to state 1
+    lista_declaracoes              shift and go to state 2
+    declaracao                     shift and go to state 3
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> lista_declaracoes .
+    (2) lista_declaracoes -> lista_declaracoes . declaracao
+    (4) declaracao -> . TIPO lista_ids PV
+
+    $end            reduce using rule 1 (programa -> lista_declaracoes .)
+    TIPO            shift and go to state 4
+
+    declaracao                     shift and go to state 5
+
+state 3
+
+    (3) lista_declaracoes -> declaracao .
+
+    TIPO            reduce using rule 3 (lista_declaracoes -> declaracao .)
+    $end            reduce using rule 3 (lista_declaracoes -> declaracao .)
+
+
+state 4
+
+    (4) declaracao -> TIPO . lista_ids PV
+    (5) lista_ids -> . ID
+    (6) lista_ids -> . lista_ids VIRG ID
+
+    ID              shift and go to state 7
+
+    lista_ids                      shift and go to state 6
+
+state 5
+
+    (2) lista_declaracoes -> lista_declaracoes declaracao .
+
+    TIPO            reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+    $end            reduce using rule 2 (lista_declaracoes -> lista_declaracoes declaracao .)
+
+
+state 6
+
+    (4) declaracao -> TIPO lista_ids . PV
+    (6) lista_ids -> lista_ids . VIRG ID
+
+    PV              shift and go to state 8
+    VIRG            shift and go to state 9
+
+
+state 7
+
+    (5) lista_ids -> ID .
+
+    PV              reduce using rule 5 (lista_ids -> ID .)
+    VIRG            reduce using rule 5 (lista_ids -> ID .)
+
+
+state 8
+
+    (4) declaracao -> TIPO lista_ids PV .
+
+    TIPO            reduce using rule 4 (declaracao -> TIPO lista_ids PV .)
+    $end            reduce using rule 4 (declaracao -> TIPO lista_ids PV .)
+
+
+state 9
+
+    (6) lista_ids -> lista_ids VIRG . ID
+
+    ID              shift and go to state 10
+
+
+state 10
+
+    (6) lista_ids -> lista_ids VIRG ID .
+
+    PV              reduce using rule 6 (lista_ids -> lista_ids VIRG ID .)
+    VIRG            reduce using rule 6 (lista_ids -> lista_ids VIRG ID .)
+
