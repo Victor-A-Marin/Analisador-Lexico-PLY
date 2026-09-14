@@ -45,13 +45,13 @@ def p_error(p):
     else:
         print("ERRO SINTATICO: fim inesperado do programa")
 
-parser = yacc.yacc()
+parser = yacc.yacc(write_tables=False, debug=False)
 
 def analisa(programa):
     tabela_simbolos.tabela_simbolos.clear()
 
-    lexico.lexer.lineno = 1   # <-- linha nova
-    lexer = lexico.lexer      # garante que o parser use o mesmo lexer
+    lexico.lexer.lineno = 1
+    lexer = lexico.lexer
     parser.parse(programa, lexer=lexer)
 
     linhas_com_erro = {linha for linha, _ in lexico.erros_lexicos}
