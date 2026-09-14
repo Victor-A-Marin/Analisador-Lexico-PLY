@@ -51,8 +51,12 @@ def analisa(programa):
     tabela_simbolos.tabela_simbolos.clear()
 
     lexico.lexer.lineno = 1
-    lexer = lexico.lexer
-    parser.parse(programa, lexer=lexer)
+    lexico.erros_lexicos.clear()
+    lexico.imprimir_erros = False
+    try:
+        parser.parse(programa, lexer=lexico.lexer)
+    finally:
+        lexico.imprimir_erros = True      # restaura para a próxima chamada
 
     linhas_com_erro = {linha for linha, _ in lexico.erros_lexicos}
     for simbolo in tabela_simbolos.tabela_simbolos:
